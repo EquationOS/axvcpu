@@ -17,6 +17,8 @@ pub trait AxArchVCpu: Sized + AxVcpuAccessGuestState {
     /// The configuration for setting up a new [`AxArchVCpu`] for host VM. Used by [`AxArchVCpu::setup_from_context`] in type 1.5 scenario.
     type HostContext;
 
+    type VCpuSetupContext;
+
     /// Create a new `AxArchVCpu`.
     fn new(config: Self::CreateConfig) -> AxResult<Self>;
 
@@ -39,7 +41,9 @@ pub trait AxArchVCpu: Sized + AxVcpuAccessGuestState {
     fn setup(&mut self, config: Self::SetupConfig) -> AxResult;
 
     /// Setup the vcpu from a pre-constructed `HostContext` structure.
-    fn setup_from_context(&mut self, config: Self::HostContext) -> AxResult;
+    fn setup_from_context(&mut self, config: Self::VCpuSetupContext) -> AxResult;
+
+    // fn setup_pvboot_context(&mut self, ctx: &Self::PVBootContext) -> AxResult;
 
     /// Run the vcpu until a vm-exit occurs.
     fn run(&mut self) -> AxResult<AxVCpuExitReason>;
