@@ -94,7 +94,5 @@ pub trait AxVcpuAccessGuestState {
     fn set_ept_pointer(&mut self, eptp: EPTPointer) -> AxResult;
     fn eptp_list_region(&self) -> HostPhysAddr;
 
-    fn set_eptp_list_region(&mut self, addr: HostPhysAddr) -> AxResult;
-
     fn dump(&self);
 }
