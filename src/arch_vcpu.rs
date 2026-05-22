@@ -91,6 +91,14 @@ pub trait AxVcpuAccessGuestState {
     fn ept_pointer(&self) -> EPTPointer;
     // Set the EPT pointer.
     fn set_ept_pointer(&mut self, eptp: EPTPointer) -> AxResult;
+    /// Set the EPT pointer without invalidating EPT-derived translations.
+    ///
+    /// This is used by VMFUNC-ablation benchmarks to emulate an EPTP-list
+    /// switch in root mode. It should only be used when the target EPTP is an
+    /// already-valid entry from the hardware EPTP list.
+    fn set_ept_pointer_no_invept(&mut self, eptp: EPTPointer) -> AxResult {
+        self.set_ept_pointer(eptp)
+    }
     /// Get the physical address of the shared #VE information area.
     fn get_ve_information_area(&self) -> HostPhysAddr;
 
